@@ -1,0 +1,23 @@
+---
+import { SITE_TITLE,SITE_DESCRIPTION,SITE_AUTHOR } from "../config";
+const tody = new Date();
+
+// footer object
+---
+<footer>
+    <p></p>
+    <p>{SITE_TITLE} | &copy; {tody.getFullYear()} | {SITE_AUTHOR}</p>
+    
+</footer>
+<style>
+    footer {
+        text-align: center;
+        /* position: fixed; */
+        /* bottom: 0; */
+        width: 100%;
+        background-color: #f1f1f1;
+        padding-top: 2%;
+        padding-bottom: 100%;
+
+    }
+</style>
