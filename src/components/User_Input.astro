@@ -28,6 +28,23 @@
         <option value="Long">Long</option>
     </select>
 </div>
+<div class="form-group row">
+    <label>Tone</label>
+    <select class="form-control" asp-for="Tones" id="Tone">
+        <option value="">Please select a length</option>
+        <option value="Short">Friendly</option>
+        <option value="Medium">Professional</option>
+        <option value="Long">Rage Inducing</option>
+    </select>
+</div>
+<div class="form-group row">
+    <label>Hearing Capability</label>
+    <select class="form-control" asp-for="Hearing" id="Hear">
+        <option value="">Please select an option</option>
+        <option value="Short">Yes</option>
+        <option value="Medium">No</option>
+    </select>
+</div>
 <script>
     var willAttend = document.getElementById("Attend")
     var button = document.querySelector("button");
@@ -39,7 +56,6 @@
     });
     
 </script>
-<p> one tow three </p>
 
 <div class="form-group row">
 	<p>
