@@ -9,13 +9,26 @@
     <button>Enter</button>
 </div>
 <div class="form-group row">
-    <label>Will you attend?</label>
-    <select class="form-control" asp-for="WillAttend">
-        <option value="">Choose an option</option>
-        <option value="true">Yes, I'll be there</option>
-        <option value="false">No, I can't come</option>
+    <label>Email Length</label>
+    <select class="form-control" asp-for="WillAttend" id="Attend">
+        <option value="">Please select a length</option>
+        <option value="Short">Short</option>
+        <option value="Medium">Medium</option>
+        <option value="Long">Long</option>
     </select>
 </div>
+<script>
+    var willAttend = document.getElementById("Attend")
+    var button = document.querySelector("button");
+    var output = document.getElementById("Output_Field");
+    button.addEventListener("click", function () {
+
+            output.textContent = willAttend.value;
+
+    });
+    
+</script>
+<p> one tow three </p>
 
 <!-- JAVASCRIPT HERE -->
 <script>
