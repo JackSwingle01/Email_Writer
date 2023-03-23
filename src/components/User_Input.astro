@@ -15,12 +15,26 @@
     <p>What is the topic/purpose of the email: <input type="text" id="purpose" /></p>
 </div>
 
-<div>
-    <p>What should the approximate length be:</p>
+<div class="form-group row">
+    <label>What should the approximate length be:</label>
+    <select class="form-control" asp-for="WillAttend" id="Attend">
+        <option value="">Please select a length</option>
+        <option value="Short">Short</option>
+        <option value="Medium">Medium</option>
+        <option value="Long">Long</option>
+    </select>
 </div>
 
-<div>
-    <p>What should the tone of the email be:</p>
+<div class="form-group row">
+	<p>
+    <label>What should the tone of the email be:</label>
+    <select class="form-control" asp-for="Tones" id="Tone">
+        <option value="">Please select a length</option>
+        <option value="Friendly">Friendly</option>
+        <option value="Professional">Professional</option>
+        <option value="Conversational">Conversational</option>
+    </select>
+    </p>
 </div>
 
 <button id="generate">Generate</button>
@@ -30,11 +44,13 @@
     var sender = document.getElementById("sender");
     var recipient = document.getElementById("recipient");
     var purpose = document.getElementById("purpose");
+    var length = document.getElementById("Attend");
+    var tone = document.getElementById("Tone");
     var button = document.getElementById("generate");
     var output = document.getElementById("Output_Field");
     
     button.addEventListener("click", function () {
-        output.textContent = sender.value + " " + recipient.value + " " + purpose.value;
+        output.textContent = sender.value + " " + recipient.value + " " + purpose.value + " " + length.value + " " + tone.value;
     });
 </script>
 
