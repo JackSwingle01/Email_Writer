@@ -4,29 +4,37 @@
 
 <!--HTML HERE -->
 <div>
-    <h1>Input</h1>
-    <input type="text" id="input" />
-    <button>Enter</button>
+    <p>Who is the email being sent from: <input type="text" id="sender" /></p>
+</div>
+	
+<div>
+    <p>Who is the email being sent to: <input type="text" id="recipient" /></p>
 </div>
 
 <div>
-    <h1>InputAgain</h1>
-    <input type="text" id="inputAgain" />
-    <button>Enter</button>
+    <p>What is the topic/purpose of the email: <input type="text" id="purpose" /></p>
 </div>
+
+<div>
+    <p>What should the approximate length be:</p>
+</div>
+
+<div>
+    <p>What should the tone of the email be:</p>
+</div>
+
+<button id="generate">Generate</button>
 
 <!-- JAVASCRIPT HERE -->
 <script>
-    var input = document.getElementById("inputAgain");
-    var button = document.querySelector("button");
+    var sender = document.getElementById("sender");
+    var recipient = document.getElementById("recipient");
+    var purpose = document.getElementById("purpose");
+    var button = document.getElementById("generate");
     var output = document.getElementById("Output_Field");
-
+    
     button.addEventListener("click", function () {
-        
-        var split = input.value.split("");
-        var reverse = split.reverse();
-        output.textContent = reverse.join("");
-
+        output.textContent = sender.value + recipient.value + purpose.value;
     });
 </script>
 
