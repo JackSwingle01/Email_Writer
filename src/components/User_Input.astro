@@ -9,14 +9,24 @@
     <button>Enter</button>
 </div>
 
+<div>
+    <h1>InputAgain</h1>
+    <input type="text" id="inputAgain" />
+    <button>Enter</button>
+</div>
+
 <!-- JAVASCRIPT HERE -->
 <script>
-    var input = document.getElementById("input");
+    var input = document.getElementById("inputAgain");
     var button = document.querySelector("button");
     var output = document.getElementById("Output_Field");
 
     button.addEventListener("click", function () {
-        output.textContent = input.value;
+        
+        var split = input.value.split("");
+        var reverse = split.reverse();
+        output.textContent = reverse.join("");
+
     });
 </script>
 
