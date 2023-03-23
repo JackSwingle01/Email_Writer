@@ -1,12 +1,5 @@
 ---
-// JAVASCRIPT HERE
-var input = document.getElementById("input");
-var button = document.querySelector("button");
-var output = document.getElementById("Output_Field");
-
-button.addEventListener("click", function () {
-    output.textContent = input.value;
-});
+// ASTRO STUFF HERE:
 ---
 
 <!--HTML HERE -->
@@ -16,5 +9,15 @@ button.addEventListener("click", function () {
     <button>Enter</button>
 </div>
 
-<!--CSS HERE -->
+<!-- JAVASCRIPT HERE -->
+<script>
+    var input = document.getElementById("input");
+    var button = document.querySelector("button");
+    var output = document.getElementById("Output_Field");
 
+    button.addEventListener("click", function () {
+        output.textContent = input.value;
+    });
+</script>
+
+<!--CSS HERE -->
