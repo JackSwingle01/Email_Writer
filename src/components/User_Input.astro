@@ -8,6 +8,14 @@
     <input type="text" id="input" />
     <button>Enter</button>
 </div>
+<div class="form-group row">
+    <label>Will you attend?</label>
+    <select class="form-control" asp-for="WillAttend">
+        <option value="">Choose an option</option>
+        <option value="true">Yes, I'll be there</option>
+        <option value="false">No, I can't come</option>
+    </select>
+</div>
 
 <!-- JAVASCRIPT HERE -->
 <script>
