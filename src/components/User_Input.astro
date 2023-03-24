@@ -49,10 +49,31 @@
     
     var button = document.getElementById("generate");
     var output = document.getElementById("Output_Field");
-    
-    button.addEventListener("click", function () {
-        output.textContent = sender.value + " " + recipient.value + " " + purpose.value + " " + length.value + " " + tone.value;
+
+    button.addEventListener("click", async function () {
+        //output.textContent = sender.value + " " + recipient.value + " " + purpose.value + " " + length.value + " " + tone.value;
+        
+        let prompt = input.value;
+        // make a get request to localhost3100
+        await getCompletion(prompt, '100').then((email) => {
+            email.text().then((text) => {
+                console.log(text);
+                output.textContent = text;
+            });
+        });
     });
+    
+    async function getCompletion(prompt, maxTokens = "10", temperature = ".5") {
+        const response = await fetch(
+            `http://localhost:3100/?prompt=" + ${prompt},
+            +"&max_tokens=" + ${maxTokens} + "&temperature=" + ${temperature}`,
+            {
+                method: "GET",
+            }
+        );
+        console.log(response);
+        return response;
+    }
 </script>
 
 <!--CSS HERE -->
