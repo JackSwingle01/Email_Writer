@@ -3,100 +3,97 @@
 ---
 
 <!--HTML HERE -->
-<div class="parameters-container">
-
+<div class="home-container1">
   <div class="who-from-container">
-    <span class="home-text0">
-        <span class="home-text1">Who is the email being sent from:</span>
-        <span></span>
-    </span>
-    <input
-        type="text"
-        id="sender"
-        class="who-from-input"
-    />
+  <span class="home-text0">
+      <span class="home-text1">Who is the email being sent from:</span>
+      <span></span>
+  </span>
+  <input
+      type="text"
+      id="sender"
+      class="who-from-input"
+  />
   </div>
 
   <div class="who-to-container">
-    <span class="home-text">
-        <span class="home-text2">Who is the email being sent to:</span>
-        <span></span>
-    </span>
-    <input
-        type="text"
-        id="recipient"
-        class="who-to-input"
-    />
+  <span class="home-text">
+      <span class="home-text2">Who is the email being sent to:</span>
+      <span></span>
+  </span>
+  <input
+      type="text"
+      id="recipient"
+      class="who-to-input"
+  />
   </div>
 
   <div class="fer-what">
-    <span class="home-text3">What is the topic/purpose of the email:</span>
-    <input
-        type="text"
-        id="purpose"
-        class="home-textinput1 input"
-    />
+  <span class="home-text3">What is the topic/purpose of the email:</span>
+  <input
+      type="text"
+      id="purpose"
+      class="home-textinput1 input"
+  />
   </div>
 
   <div class="how-long">
-    <span class="home-text4">What should the approximate length be:</span>
-    <select class="how-long-select" id="length">
-        <option value="">Please select a length</option>
-        <option value="100">Short</option>
-        <option value="200">Medium</option>
-        <option value="300">Long</option>
-    </select>
+  <span class="home-text4">What should the approximate length be:</span>
+  <select class="how-long-select">
+      <option value="">Please select a length</option>
+      <option value="100">Short</option>
+      <option value="200">Medium</option>
+      <option value="300">Long</option>
+  </select>
   </div>
 
   <div class="what-tone">
-    <span class="home-text5">What should the tone of the email be:</span>
-    <select class="what-tone-select" id = "tone">
-        <option value="">Please select a tone</option>
-        <option value="friendly">Friendly</option>
-        <option value="professional">Professional</option>
-        <option value="conversational">Conversational</option>
-    </select>
+  <span class="home-text5">What should the tone of the email be:</span>
+  <select class="what-tone-select">
+      <option value="">Please select a tone</option>
+      <option value="100">Friendly</option>
+      <option value="200">Professional</option>
+      <option value="300">Conversational</option>
+  </select>
   </div>
 
-  <div class="do-a-thing">
+
   <button id="generate">Generate</button>
+
+
+
+  <!--  
+  <div class="form-group row">
+      <label>Will you attend?</label>
+      <select class="form-control" asp-for="WillAttend">
+          <option value="">Choose an option</option>
+          <option value="true">Yes, I'll be there</option>
+          <option value="false">No, I can't come</option>
+      </select>
   </div>
-
+  -->
 </div>
-
-
-<!-- 
-<div class="form-group row">
-    <label>Will you attend?</label>
-    <select class="form-control" asp-for="WillAttend">
-        <option value="">Choose an option</option>
-        <option value="true">Yes, I'll be there</option>
-        <option value="false">No, I can't come</option>
-    </select>
-</div>
--->
 
 
 <!-- JAVASCRIPT HERE -->
 <script>
-    var sender = document.getElementById("sender");
-    var recipient = document.getElementById("recipient");
-    var purpose = document.getElementById("purpose");
-    var length = document.getElementById("length");
-    var tone = document.getElementById("tone");
-    var button = document.getElementById("generate");
-    var output = document.getElementById("Output_Field");
-    
-    button.addEventListener("click", function () {
-        output.textContent = sender.value + " " + recipient.value + " " + purpose.value + " " + length.value + " " + tone.value;
-    });
+  var sender = document.getElementById("sender");
+  var recipient = document.getElementById("recipient");
+  var purpose = document.getElementById("purpose");
+  var length = document.getElementById("length");
+  var tone = document.getElementById("tone");
+  var button = document.getElementById("generate");
+  var output = document.getElementById("Output_Field");
+  
+  button.addEventListener("click", function () {
+      output.textContent = sender.value + " " + recipient.value + " " + purpose.value + " " + length.value + " " + tone.value;
+  });
 </script>
 
 <!--CSS HERE -->
 
 <style>
-
-.parameters-container {
+.home-container1 {
 width: 100%;
 height: auto;
 display: flex;
@@ -104,8 +101,7 @@ align-items: flex-start;
 flex-direction: column;
 background-color: var(--dl-color-gray-white);
 }
-
-  .who-from-container {
+.who-from-container {
 width: 1000px;
 height: 40px;
 display: flex;
@@ -222,9 +218,10 @@ position: absolute;
 border-color: var(--dl-color-gray-black);
 border-width: 1px;
 }
-
+/*
 .do-a-thing {
 align-self: center;
 }
+*/
 
 </style>
