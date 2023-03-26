@@ -71,18 +71,6 @@
 </div>
 
 
-<!-- 
-<div class="form-group row">
-    <label>Will you attend?</label>
-    <select class="form-control" asp-for="WillAttend">
-        <option value="">Choose an option</option>
-        <option value="true">Yes, I'll be there</option>
-        <option value="false">No, I can't come</option>
-    </select>
-</div>
--->
-
-
 <!-- JAVASCRIPT HERE -->
 <script>
     var sender = document.getElementById("sender");
@@ -98,149 +86,147 @@
     });
 </script>
 
+
 <!--CSS HERE -->
-
 <style>
+  .pre-spacer {
+  width: 700px;
+  height: 40px;
+  }
 
-.pre-spacer {
-width: 700px;
-height: 40px;
-}
+  .parameters-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: var(--dl-color-gray-white);
+  }
 
-.parameters-container {
-width: 100%;
-height: auto;
-display: flex;
-align-items: flex-start;
-flex-direction: column;
-background-color: var(--dl-color-gray-white);
-}
+  .who-from-container {
+  width: 700px;
+  height: 40px;
+  display: flex;
+  position: relative;
+  align-self: center;
+  align-items: flex-start;
+  }
+  .home-text {
+  padding-top: var(--dl-space-space-unit);
+  }
+  .home-text1 {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  }
+  .who-from-input {
+  top: 8px;
+  right: 0px;
+  height: 20px;
+  position: absolute;
+  align-self: flex-start;
+  }
 
-.who-from-container {
-width: 700px;
-height: 40px;
-display: flex;
-position: relative;
-align-self: center;
-align-items: flex-start;
-}
-.home-text {
-padding-top: var(--dl-space-space-unit);
-}
-.home-text1 {
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-}
-.who-from-input {
-top: 8px;
-right: 0px;
-height: 20px;
-position: absolute;
-align-self: flex-start;
-}
+  .who-to-container {
+  width: 700px;
+  height: 40px;
+  display: flex;
+  position: relative;
+  align-self: center;
+  align-items: flex-start;
+  }
+  .home-text {
+  padding-top: var(--dl-space-space-unit);
+  }
+  .home-text2 {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  }
+  .who-to-input {
+  top: 8px;
+  right: 0px;
+  height: 20px;
+  position: absolute;
+  align-self: flex-start;
+  }
 
-.who-to-container {
-width: 700px;
-height: 40px;
-display: flex;
-position: relative;
-align-self: center;
-align-items: flex-start;
-}
-.home-text {
-padding-top: var(--dl-space-space-unit);
-}
-.home-text2 {
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-}
-.who-to-input {
-top: 8px;
-right: 0px;
-height: 20px;
-position: absolute;
-align-self: flex-start;
-}
+  .fer-what {
+  width: 700px;
+  height: 40px;
+  display: flex;
+  position: relative;
+  align-self: center;
+  align-items: flex-start;
+  }
+  .home-text3 {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  padding-top: var(--dl-space-space-unit);
+  }
+  .home-textinput1 {
+  top: 8px;
+  right: 0px;
+  height: 20px;
+  position: absolute;
+  align-self: flex-start;
+  }
 
-.fer-what {
-width: 700px;
-height: 40px;
-display: flex;
-position: relative;
-align-self: center;
-align-items: flex-start;
-}
-.home-text3 {
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-padding-top: var(--dl-space-space-unit);
-}
-.home-textinput1 {
-top: 8px;
-right: 0px;
-height: 20px;
-position: absolute;
-align-self: flex-start;
-}
+  .how-long {
+  width: 700px;
+  height: 40px;
+  display: flex;
+  position: relative;
+  align-self: center;
+  align-items: flex-start;
+  }
+  .home-text4 {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  padding-top: var(--dl-space-space-unit);
+  }
+  .how-long-select {
+  top: 8px;
+  right: 0px;
+  width: 176px;
+  height: 26px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  }
 
-.how-long {
-width: 700px;
-height: 40px;
-display: flex;
-position: relative;
-align-self: center;
-align-items: flex-start;
-}
-.home-text4 {
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-padding-top: var(--dl-space-space-unit);
-}
-.how-long-select {
-top: 8px;
-right: 0px;
-width: 176px;
-height: 26px;
-position: absolute;
-border-color: var(--dl-color-gray-black);
-border-width: 1px;
-}
+  .what-tone {
+  width: 700px;
+  height: 40px;
+  display: flex;
+  position: relative;
+  align-self: center;
+  align-items: flex-start;
+  }
+  .home-text5 {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  padding-top: var(--dl-space-space-unit);
+  }
+  .what-tone-select {
+  top: 8px;
+  right: 0px;
+  width: 176px;
+  height: 26px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  }
 
-.what-tone {
-width: 700px;
-height: 40px;
-display: flex;
-position: relative;
-align-self: center;
-align-items: flex-start;
-}
-.home-text5 {
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-padding-top: var(--dl-space-space-unit);
-}
-.what-tone-select {
-top: 8px;
-right: 0px;
-width: 176px;
-height: 26px;
-position: absolute;
-border-color: var(--dl-color-gray-black);
-border-width: 1px;
-}
+  .post-spacer {
+  width: 700px;
+  height: 40px;
+  }
 
-.post-spacer {
-width: 700px;
-height: 40px;
-}
-
-.do-a-thing {
-align-self: center;
-}
-
+  .do-a-thing {
+  align-self: center;
+  }
 </style>
