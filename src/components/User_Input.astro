@@ -7,22 +7,27 @@ import Clear_Button from "./Clear_Button.astro";
 <div id="options_div">
     <div>
         <p>
-            Who is the email being sent from: <br><input type="text" id="sender" />
-        </p>
-    </div>
-
-    <div>
-        <p>
-            Who is the email being sent to: <br><input type="text" id="recipient" />
-        </p>
-    </div>
-
-    <div>
-        <p>
-            What is the topic/purpose of the email: <br><textarea
+            Who is the email being sent from: <br /><input
                 type="text"
-                id="purpose"
+                id="sender"
             />
+        </p>
+    </div>
+
+    <div>
+        <p>
+            Who is the email being sent to: <br /><input
+                type="text"
+                id="recipient"
+            />
+        </p>
+    </div>
+
+    <div>
+        <p>
+            What is the topic/purpose of the email: <br /><textarea
+                type="text"
+                id="purpose"></textarea>
         </p>
     </div>
 
@@ -53,6 +58,8 @@ import Clear_Button from "./Clear_Button.astro";
 </div>
 <!-- JAVASCRIPT HERE -->
 <script>
+    var auth_header;
+
     var sender = document.getElementById("sender");
     var recipient = document.getElementById("recipient");
     var purpose = document.getElementById("purpose");
@@ -65,6 +72,10 @@ import Clear_Button from "./Clear_Button.astro";
     button.addEventListener("click", async function () {
         let prompt = constructPrompt();
         output.textContent = "Generating...";
+
+        await login("admin", "admin").then((auth) => {
+            auth_header = auth;
+        });
         // make a get request to localhost3100
         await getCompletion(prompt, getMaxTokenCount(length.value)).then(
             (email) => {
@@ -102,25 +113,41 @@ import Clear_Button from "./Clear_Button.astro";
             return 500;
         }
     }
+    async function login(username: string, password: string) {
+        console.log("Logging in...");
+        let auth = JSON.stringify({
+            username: username,
+            password: password,
+        });
+        const response = await fetch(`http://localhost:3100/login`, {
+            method: "POST",
+            body: auth,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
+        return response.json().then((tok) => tok.token);
+    }
     async function getCompletion(
         prompt: string,
         maxTokens = 10,
         temperature = 0.7
     ) {
         const response = await fetch(
-            `http://localhost:3100/?prompt=${prompt}&max_tokens=${maxTokens.toString()}&temperature=${temperature.toString()}`,
+            `http://localhost:3100/email-completion/?prompt=${prompt}&maxTokens=${maxTokens}&temperature=${temperature}`,
             {
                 method: "GET",
+                headers: {
+                    Authorization: "Bearer: " + auth_header,
+                    "Content-Type": "application/json",
+                },
             }
         );
-        console.log(response);
         return response;
     }
 </script>
 
 <!--CSS HERE -->
 
-<style>
-    
-</style>
+<style></style>
