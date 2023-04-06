@@ -1,21 +1,41 @@
 <button id="clear_button">Clear Inputs</button>
 
 <script>
-    // Clear button
     document
         .getElementById("clear_button")
         .addEventListener("click", function () {
-            //get all input fields and dropdowns and reset them to their default values
-            var inputs = document.getElementsByTagName("input");
-            for (var i = 0; i < inputs.length; i++) {
-                switch (inputs[i].type) {
-                    case "text":
-                        inputs[i].value = "";
-                }
-            }
-            var selects = document.getElementsByTagName("select");
-            for (var i = 0; i < selects.length; i++) {
-                selects[i].selectedIndex = 0;
-            }
+            clearAllInputs();
         });
+
+    function clearAllInputs() {
+        clearAllTextInputs();
+        clearAllSelects();
+        clearAllTextAreas();
+    }
+
+
+    function clearAllTextInputs() {
+        var inputs = document.getElementsByTagName("input");
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type == "text") {
+                inputs[i].value = "";
+            }
+        }
+    }
+
+    function clearAllTextAreas() {
+        var textareas = document.getElementsByTagName("textarea");
+        for (var i = 0; i < textareas.length; i++) {
+            textareas[i].value = "";
+        }
+    }
+
+    function clearAllSelects() {
+        var selects = document.getElementsByTagName("select");
+        for (var i = 0; i < selects.length; i++) {
+            selects[i].selectedIndex = 0;
+        }
+    }
+
+
 </script>

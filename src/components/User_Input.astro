@@ -1,90 +1,103 @@
 ---
-// ASTRO STUFF HERE:
 import Clear_Button from "./Clear_Button.astro";
 ---
 
-<!--HTML HERE -->
 <div id="options_div">
-    <div>
-        <p>
-            Who is the email being sent from: <br /><input
-                type="text"
-                id="sender"
-            />
-        </p>
+    <div class="input_item">
+        Who is the email being sent from: <br /><input
+            type="text"
+            id="sender_textinput"
+        />
     </div>
 
-    <div>
-        <p>
-            Who is the email being sent to: <br /><input
-                type="text"
-                id="recipient"
-            />
-        </p>
+    <div class="input_item">
+        Who is the email being sent to: <br /><input
+            type="text"
+            id="recipient_textinput"
+        />
     </div>
 
-    <div>
-        <p>
-            What is the topic/purpose of the email: <br /><textarea
-                type="text"
-                id="purpose"></textarea>
-        </p>
+    <div class="input_item">
+        What is the topic/purpose of the email: <br /><textarea
+            id="purpose_textarea"></textarea>
     </div>
 
-    <div class="form-group row">
+    <div class="input_item">
         <label>What should the approximate length be:</label>
-        <select class="form-control" asp-for="WillAttend" id="Attend">
-            <option value="">Please select a length</option>
+        <select id="length_select">
+            <option value="">Select a length</option>
             <option value="Short">Short</option>
             <option value="Medium">Medium</option>
             <option value="Long">Long</option>
         </select>
     </div>
 
-    <div class="form-group row">
-        <p>
-            <label>What should the tone of the email be:</label>
-            <select class="form-control" asp-for="Tones" id="Tone">
-                <option value="">Please select a length</option>
-                <option value="Friendly">Friendly</option>
-                <option value="Professional">Professional</option>
-                <option value="Conversational">Conversational</option>
-            </select>
-        </p>
+    <div class="input_item">
+        <label>What should the tone of the email be:</label>
+        <select id="tone_select">
+            <option value="">Select a tone</option>
+            <option value="Friendly">Friendly</option>
+            <option value="Professional">Professional</option>
+            <option value="Conversational">Conversational</option>
+        </select>
     </div>
-
-    <button id="generate">Generate</button>
-    <Clear_Button />
+    <div id="buttons_div">
+        <button id="generate_button">Generate Email</button>
+        <Clear_Button />
+    </div>
 </div>
-<!-- JAVASCRIPT HERE -->
+
 <script>
-    var auth_header;
+    // get html elements
+    const sender = document.querySelector(
+        "#sender_textinput"
+    ) as HTMLInputElement;
 
-    var sender = document.getElementById("sender");
-    var recipient = document.getElementById("recipient");
-    var purpose = document.getElementById("purpose");
-    var length = document.getElementById("Attend");
-    var tone = document.getElementById("Tone");
+    const recipient = document.querySelector(
+        "#recipient_textinput"
+    ) as HTMLInputElement;
+    const purpose = document.querySelector(
+        "#purpose_textarea"
+    ) as HTMLTextAreaElement;
+    const length = document.querySelector(
+        "#length_select"
+    ) as HTMLSelectElement;
+    const tone = document.querySelector("#tone_select") as HTMLSelectElement;
 
-    var button = document.getElementById("generate");
-    var output = document.getElementById("Output_Field");
+    const button = document.querySelector(
+        "#generate_button"
+    ) as HTMLButtonElement;
+    const output = document.querySelector(
+        "#Output_Field"
+    ) as HTMLParagraphElement;
+
+    // max token counts for each length
+    const maxTokenCounts = {
+        Short: 200,
+        Medium: 500,
+        Long: 1000,
+    };
+
+    // global variable for auth header
+    var auth_header: string;
 
     button.addEventListener("click", async function () {
-        let prompt = constructPrompt();
+        // the api is slow, so let the user know that the email is being generated
         output.textContent = "Generating...";
 
-        await login("admin", "admin").then((auth) => {
-            auth_header = auth;
-        });
-        // make a get request to localhost3100
-        await getCompletion(prompt, getMaxTokenCount(length.value)).then(
-            (email) => {
-                email.text().then((text) => {
-                    console.log(text);
-                    output.textContent = text;
-                });
-            }
-        );
+        // construct the prompt and get the max tokens
+        let prompt = constructPrompt();
+        let maxTokens = maxTokenCounts[length.value] || 500;
+
+        // login to the api
+        auth_header = await login("admin", "admin");
+
+        // make a get request to the server
+        let email = await getCompletion(prompt, maxTokens);
+        let text = await email.text();
+        console.log(text);
+        // display the email
+        output.textContent = text;
     });
 
     function constructPrompt() {
@@ -102,52 +115,53 @@ import Clear_Button from "./Clear_Button.astro";
         return prompt;
     }
 
-    function getMaxTokenCount(length: string) {
-        if (length == "Short") {
-            return 200;
-        } else if (length == "Medium") {
-            return 500;
-        } else if (length == "Long") {
-            return 1000;
-        } else {
-            return 500;
-        }
-    }
     async function login(username: string, password: string) {
         console.log("Logging in...");
-        let auth = JSON.stringify({
-            username: username,
-            password: password,
-        });
-        const response = await fetch(`http://localhost:3100/login`, {
+        const auth = JSON.stringify({ username, password });
+        const url = "http://localhost:3100/login";
+
+        const response = await fetchWithErrorHandling(url, {
             method: "POST",
             body: auth,
             headers: {
                 "Content-Type": "application/json",
             },
         });
-
-        return response.json().then((tok) => tok.token);
+        const { token } = await response.json();
+        console.log("Logged in");
+        return token;
     }
+
     async function getCompletion(
         prompt: string,
-        maxTokens = 10,
-        temperature = 0.7
+        maxTokens: number = 10,
+        temperature: number = 0.7
     ) {
-        const response = await fetch(
-            `http://localhost:3100/email-completion/?prompt=${prompt}&maxTokens=${maxTokens}&temperature=${temperature}`,
-            {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer: " + auth_header,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        const server_address = "http://localhost:3100/email-completion/";
+        const query = `?prompt=${prompt}&maxTokens=${maxTokens}&temperature=${temperature}`;
+        const url = server_address + query;
+
+        const response = await fetchWithErrorHandling(url, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer: ${auth_header}`,
+                "Content-Type": "application/json",
+            },
+        });
         return response;
     }
+
+    async function fetchWithErrorHandling(url: string, options: any) {
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error("Network response was not ok.");
+            }
+            return response;
+        } catch (error) {
+            console.log(error);
+            output.textContent = "Error: " + error;
+            throw error;
+        }
+    }
 </script>
-
-<!--CSS HERE -->
-
-<style></style>
