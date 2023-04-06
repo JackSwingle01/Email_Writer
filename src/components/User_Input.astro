@@ -2,9 +2,55 @@
 // ASTRO STUFF HERE:
 import Clear_Button from "./Clear_Button.astro";
 ---
+<!--THIS IS LOGIN STUFF-->
+<script>
+window.addEventListener("DOMContentLoaded", function() {
+    var username = "";
+    var password = "";
+    var popup = document.createElement("div");
+    popup.id = "login-popup";
+    popup.innerHTML = `
+        <div class="popup-content" style="background-color: white; padding: 20px;">
+            <h3>Please enter your username and password</h3>
+            <label for="username">Username:</label>
+            <input type="text" id="username-input"><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password-input"><br><br>
+            <button id="submit-login">Submit</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+
+    var popupContent = document.querySelector("#login-popup .popup-content");
+    popupContent.style.position = "absolute";
+    popupContent.style.left = "50%";
+    popupContent.style.top = "40%";
+    popupContent.style.transform = "translate(-50%, -50%)";
+    
+    var submitButton = document.querySelector("#submit-login");
+    var usernameInput = document.querySelector("#username-input");
+    var passwordInput = document.querySelector("#password-input");
+    
+    submitButton.addEventListener("click", function() {
+        username = usernameInput.value;
+        password = passwordInput.value;
+        tempLogin(username, password);
+    });
+});
+
+function tempLogin(username, password) {
+    if (username === "admin" && password === "admin") {
+        document.querySelector("#login-popup").style.display = "none";
+    } else {
+        alert("ERROR: Invalid username or password");
+        document.querySelector("#username-input").value = "";
+        document.querySelector("#password-input").value = "";
+    }
+}
+</script>
 
 <!--HTML HERE -->
-<div id="options_div">
+	<div id="options_div">
     <div>
         <p>
             Who is the email being sent from: <br /><input
