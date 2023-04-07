@@ -115,10 +115,12 @@ import Clear_Button from "./Clear_Button.astro";
         return prompt;
     }
 
+    const server_address = 'https://email-writer-server-9.onrender.com/'
+
     async function login(username: string, password: string) {
         console.log("Logging in...");
         const auth = JSON.stringify({ username, password });
-        const url = "http://localhost:3100/login";
+        const url = server_address + "login";
 
         const response = await fetchWithErrorHandling(url, {
             method: "POST",
@@ -137,9 +139,9 @@ import Clear_Button from "./Clear_Button.astro";
         maxTokens: number = 10,
         temperature: number = 0.7
     ) {
-        const server_address = "http://localhost:3100/email-completion/";
+        let url = server_address + "email-completion/";
         const query = `?prompt=${prompt}&maxTokens=${maxTokens}&temperature=${temperature}`;
-        const url = server_address + query;
+        url += query;
 
         const response = await fetchWithErrorHandling(url, {
             method: "GET",
