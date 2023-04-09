@@ -44,15 +44,17 @@ import Clear_Button from "./Clear_Button.astro";
     <div id="buttons_div">
         <button id="generate_button">Generate Email</button>
         <Clear_Button />
+        <button id="editor_button">Edit Email</button>
     </div>
 </div>
 
 <script>
+    import { getCompletion, login } from "../network"
+
     // get html elements
     const sender = document.querySelector(
         "#sender_textinput"
     ) as HTMLInputElement;
-
     const recipient = document.querySelector(
         "#recipient_textinput"
     ) as HTMLInputElement;
@@ -63,13 +65,15 @@ import Clear_Button from "./Clear_Button.astro";
         "#length_select"
     ) as HTMLSelectElement;
     const tone = document.querySelector("#tone_select") as HTMLSelectElement;
-
     const button = document.querySelector(
         "#generate_button"
     ) as HTMLButtonElement;
     const output = document.querySelector(
         "#Output_Field"
     ) as HTMLParagraphElement;
+    const editor_button = document.querySelector(
+        "#editor_button"
+    ) as HTMLButtonElement;
 
     // max token counts for each length
     const maxTokenCounts = {
@@ -93,11 +97,13 @@ import Clear_Button from "./Clear_Button.astro";
         auth_header = await login("admin", "admin");
 
         // make a get request to the server
-        let email = await getCompletion(prompt, maxTokens);
+        let email = await getCompletion(prompt, maxTokens, .7, auth_header);
         let text = await email.text();
         console.log(text);
         // display the email
         output.textContent = text;
+        //display the editor button
+        editor_button.style.display = "inline-block";
     });
 
     function constructPrompt() {
@@ -115,55 +121,15 @@ import Clear_Button from "./Clear_Button.astro";
         return prompt;
     }
 
-    const server_address = 'https://email-writer-server-9.onrender.com/'
-
-    async function login(username: string, password: string) {
-        console.log("Logging in...");
-        const auth = JSON.stringify({ username, password });
-        const url = server_address + "login";
-
-        const response = await fetchWithErrorHandling(url, {
-            method: "POST",
-            body: auth,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const { token } = await response.json();
-        console.log("Logged in");
-        return token;
-    }
-
-    async function getCompletion(
-        prompt: string,
-        maxTokens: number = 10,
-        temperature: number = 0.7
-    ) {
-        let url = server_address + "email-completion/";
-        const query = `?prompt=${prompt}&maxTokens=${maxTokens}&temperature=${temperature}`;
-        url += query;
-
-        const response = await fetchWithErrorHandling(url, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer: ${auth_header}`,
-                "Content-Type": "application/json",
-            },
-        });
-        return response;
-    }
-
-    async function fetchWithErrorHandling(url: string, options: any) {
-        try {
-            const response = await fetch(url, options);
-            if (!response.ok) {
-                throw new Error("Network response was not ok.");
-            }
-            return response;
-        } catch (error) {
-            console.log(error);
-            output.textContent = "Error: " + error;
-            throw error;
+    editor_button.addEventListener("click", function () {
+        const editor = document.querySelector("#editor_div") as HTMLDivElement;
+        toggle_display(editor);
+    });
+    function toggle_display(element: HTMLElement) {
+        if (element.style.display == "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
         }
     }
 </script>
