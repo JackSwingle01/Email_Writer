@@ -1,0 +1,37 @@
+<div id="editor_div">
+    <div class="input_item">
+        <p>
+            What changes would you like to make to the email?<br />
+            <textarea id="editor_textarea"></textarea>
+        </p>
+        <button id="edit_button">Regenerate email</button>
+    </div>
+</div>
+
+<script>
+    import { getEditCompletion, login} from "../network";
+
+    const edit_textarea = document.querySelector(
+        "#editor_textarea"
+    ) as HTMLTextAreaElement;
+    const output = document.querySelector(
+        "#Output_Field"
+    ) as HTMLParagraphElement;
+    const edit_button = document.querySelector(
+        "#edit_button"
+    ) as HTMLButtonElement;
+
+    edit_button.addEventListener("click", async function () {
+
+        const email = output.textContent;
+        const changes = edit_textarea.value;
+
+        output.textContent = "Regenerating...";
+
+        const auth_header = await login("admin", "admin");
+        let response = await getEditCompletion(email, changes, '1000', '.5', auth_header);
+        let text = await response.text();
+        output.textContent = text;
+
+    });
+</script>
