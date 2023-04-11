@@ -20,5 +20,4 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-API_KEY.ts
 server/API_KEY.js
