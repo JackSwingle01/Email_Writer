@@ -50,7 +50,12 @@ import Clear_Button from "./Clear_Button.astro";
 
 <script>
     import { getCompletion, login } from "../network"
+	
+	// getting token from URL
+  	const urlParams = new URLSearchParams(window.location.search);
+  	const token = urlParams.get('token');
 
+  	console.log('Token:', token);
     // get html elements
     const sender = document.querySelector(
         "#sender_textinput"
@@ -94,10 +99,10 @@ import Clear_Button from "./Clear_Button.astro";
         let maxTokens = maxTokenCounts[length.value] || 500;
 
         // login to the api
-        auth_header = await login("admin", "admin");
+        //auth_header = await login("admin", "admin");
 
         // make a get request to the server
-        let email = await getCompletion(prompt, maxTokens, .7, auth_header);
+        let email = await getCompletion(prompt, maxTokens, .7, token);
         let text = await email.text();
         console.log(text);
         // display the email
