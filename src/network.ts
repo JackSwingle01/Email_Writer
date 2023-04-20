@@ -1,3 +1,4 @@
+import { error } from "console";
 import { DEVELOPMENT_MODE } from "./config";
 
 let server_address: string;
@@ -12,7 +13,7 @@ export async function getCompletion(
     maxTokens: number = 10,
     temperature: number = 0.7,
     auth_header: string
-) {
+): Promise<Response> {
     let url = server_address + "email-completion/";
     const query = `?prompt=${prompt}&maxTokens=${maxTokens}&temperature=${temperature}`;
     url += query;
@@ -27,7 +28,7 @@ export async function getCompletion(
     return response;
 }
 
-export async function getEditCompletion(email:string, changes:string, maxTokens:string, temperature:string, auth_header:string){
+export async function getEditCompletion(email: string, changes: string, maxTokens: string, temperature: string, auth_header: string): Promise<Response> {
     let url = server_address + "email-edit-completion/";
     const query = `?email=${email}&changes=${changes}&maxTokens=${maxTokens}&temperature=${temperature}`;
     url += query;
@@ -42,7 +43,7 @@ export async function getEditCompletion(email:string, changes:string, maxTokens:
     return response;
 }
 
-export async function fetchWithErrorHandling(url: string, options: any) {
+export async function fetchWithErrorHandling(url: string, options: any): Promise<Response> {
     try {
         const response = await fetch(url, options);
         if (!response.ok) {
@@ -56,7 +57,7 @@ export async function fetchWithErrorHandling(url: string, options: any) {
     }
 }
 
-export async function login(username: string, password: string) {
+export async function login(username: string, password: string): Promise<string> {
     console.log("Logging in...");
     const auth = JSON.stringify({ username, password });
     const url = server_address + "login";
@@ -68,7 +69,18 @@ export async function login(username: string, password: string) {
             "Content-Type": "application/json",
         },
     });
-    const { token } = await response.json();
-    console.log("Logged in");
-    return token;
+    try {
+        const { token } = await response.json();
+        if (!response.ok) {
+            throw new Error("Network response was not ok.");
+        }
+        console.log("Logged in successfully.");
+        return token;
+    } catch (error) {
+        console.error("Failed to log in:", error);
+        // Display an error message
+        // alert(`Failed to log in: ${error}`);
+        throw error;
+    }
+
 }
