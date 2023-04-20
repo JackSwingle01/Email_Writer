@@ -6,7 +6,7 @@ if (DEVELOPMENT_MODE) {
 } else {
     server_address = "https://email-writer-server-9.onrender.com/";
 }
-
+console.log(server_address);
 export async function getCompletion(
     prompt: string,
     maxTokens: number = 10,
