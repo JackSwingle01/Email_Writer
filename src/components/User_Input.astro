@@ -49,13 +49,13 @@ import Clear_Button from "./Clear_Button.astro";
 </div>
 
 <script>
-    import { getCompletion, login } from "../network"
-	
-	// getting token from URL
-  	const urlParams = new URLSearchParams(window.location.search);
-  	const token = urlParams.get('token');
+    import { getCompletion, login } from "../network";
 
-  	console.log('Token:', token);
+    // getting token from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    console.log("Token:", token);
     // get html elements
     const sender = document.querySelector(
         "#sender_textinput"
@@ -91,6 +91,11 @@ import Clear_Button from "./Clear_Button.astro";
     var auth_header: string;
 
     button.addEventListener("click", async function () {
+        if (token == null) {
+            output.textContent = "Please login to use this feature";
+            return;
+        }
+
         // the api is slow, so let the user know that the email is being generated
         output.textContent = "Generating...";
 
@@ -98,17 +103,19 @@ import Clear_Button from "./Clear_Button.astro";
         let prompt = constructPrompt();
         let maxTokens = maxTokenCounts[length.value] || 500;
 
-        // login to the api
-        //auth_header = await login("admin", "admin");
-
-        // make a get request to the server
-        let email = await getCompletion(prompt, maxTokens, .7, token);
-        let text = await email.text();
-        console.log(text);
-        // display the email
-        output.textContent = text;
-        //display the editor button
-        editor_button.style.display = "inline-block";
+        try {
+            // make a get request to the server
+            let email = await getCompletion(prompt, maxTokens, 0.7, token);
+            let text = await email.text();
+            console.log(text);
+            // display the email
+            output.textContent = text;
+            //display the editor button
+            editor_button.style.display = "inline-block";
+        } catch (error) {
+            console.log(error);
+            output.textContent = "Error generating email";
+        }
     });
 
     function constructPrompt() {

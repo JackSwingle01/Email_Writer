@@ -1,5 +1,6 @@
 ---
 import Break from "../pages/Break.astro";
+import Layout from "../layouts/Layout.astro";
 // Define the types for the login credentials
 // type LoginCredentials = {
 //   username: string;
@@ -7,6 +8,7 @@ import Break from "../pages/Break.astro";
 // };
 ---
 
+<!-- <Layout> -->
 <main>
   <h1>Login Page</h1>
   <form>
@@ -21,11 +23,10 @@ import Break from "../pages/Break.astro";
     <button id="login_button" type="button">Log In</button>
   </form>
 </main>
-
+<!-- </Layout> -->
 <script>
-  
   import { login } from "../network";
-  
+
   const login_button = document.querySelector(
     "#login_button"
   ) as HTMLButtonElement;
@@ -43,8 +44,7 @@ import Break from "../pages/Break.astro";
     let password = password_input.value as string;
 
     try {
-      let authentication_key = await login(username, password);
-
+      let authentication_key = await login(username, password); // will throw an error if the login fails
       console.log("Logged in successfully with token:", authentication_key);
       // Navigate to the Break page
       window.location.href = "/Break?token=" + authentication_key;
@@ -53,6 +53,7 @@ import Break from "../pages/Break.astro";
       // Display an error message
       alert("Failed to log in. Please try again.");
     }
+
     // let credentials = JSON.stringify({
     //   username: username,
     //   password: password,

@@ -52,7 +52,7 @@ export async function fetchWithErrorHandling(url: string, options: any): Promise
         return response;
     } catch (error) {
         console.log(error);
-        document.querySelector("#Output_Field").textContent = "Error: " + error;
+        // document.querySelector("#Output_Field").textContent = "Error: " + error;
         throw error;
     }
 }
