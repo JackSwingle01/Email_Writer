@@ -1,0 +1,120 @@
+---
+import Break from "../pages/Break.astro";
+import Layout from "../layouts/Layout.astro";
+// Define the types for the login credentials
+// type LoginCredentials = {
+//   username: string;
+//   password: string;
+// };
+---
+
+<!-- <Layout> -->
+<main>
+  <h1>Login Page</h1>
+  <form>
+    <label>
+      Username:
+      <input type="text" id="username" />
+    </label>
+    <label>
+      Password:
+      <input type="password" id="password" />
+    </label>
+    <button id="login_button" type="button">Log In</button>
+  </form>
+</main>
+<!-- </Layout> -->
+<script>
+  import { login } from "../network";
+
+  const login_button = document.querySelector(
+    "#login_button"
+  ) as HTMLButtonElement;
+  const username_input = document.querySelector(
+    "#username"
+  ) as HTMLInputElement;
+  const password_input = document.querySelector(
+    "#password"
+  ) as HTMLInputElement;
+
+  login_button.addEventListener("click", async function () {
+    console.log("Logging in...");
+
+    let username = username_input.value as string;
+    let password = password_input.value as string;
+
+    try {
+      let authentication_key = await login(username, password); // will throw an error if the login fails
+      console.log("Logged in successfully with token:", authentication_key);
+      // Navigate to the Break page
+      window.location.href = "/Break?token=" + authentication_key;
+    } catch (error) {
+      console.error("Failed to log in:", error.status, error.statusText);
+      // Display an error message
+      alert("Failed to log in. Please try again.");
+    }
+
+    // let credentials = JSON.stringify({
+    //   username: username,
+    //   password: password,
+    // });
+    // fetch(`http://localhost:3100/login`, {
+    //   method: "POST",
+    //   body: auth,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json().then((tok) => {
+    //         console.log("Logged in successfully with token:", tok.token);
+    //         // Navigate to the Break page
+    //         window.location.href = "/Break?token=" + tok.token;
+    //       });
+    //     } else {
+    //       console.error(
+    //         "Failed to log in:",
+    //         response.status,
+    //         response.statusText
+    //       );
+    //       // Display an error message
+    //       alert("Invalid username or password");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     if (typeof error === "string") {
+    //       console.error("Failed to log in:", error);
+    //       // Display an error message
+    //       alert("Failed to log in, Invalid usernmae or password");
+    //     } else {
+    //       // Handle other types of errors
+    //       console.error("Failed to log in:", error);
+    //       // Display an error message
+    //       alert("Failed to log in. Please try again later.");
+    //     }
+    //   });
+  });
+</script>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+    /* text-align: center; */
+  }
+  h1 {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+</style>

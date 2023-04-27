@@ -1,28 +1,20 @@
 ---
-// ASTRO STUFF HERE (BETWEEN THE DASHES):
-import Layout from '../layouts/Layout.astro';
 import Output from '../components/Output.astro';
 import UserInput from '../components/User_Input.astro';
+import Layout from '../layouts/Layout.astro';
 import { SITE_TITLE } from '../config';
 import Editor from '../components/Editor.astro';
-import Login from '../pages/Login.astro';
-
 ---
 
-<!-- Avoid adding anything on this page, instead add things in their own component and add the component -->
 <Layout title="Email Writer">
 	<main>
-		<!-- SITE TITLE HEADER -->
-		<h1 class="text-gradient">{SITE_TITLE}</h1>		
-		<!-- USER INPUT AND OUTPUT AND EDITOR COMPONENTS -->
-		<!-- REMEMBER TO ADD EDITOR MAX--> 
-		<Login />
+		<h1 class="text-gradient">{SITE_TITLE}</h1>	
+		<UserInput />
+		<Editor />
+		<Output />
 	</main>
 </Layout>
 
-
-<!-- CSS HERE: -->
-<!-- THIS CSS WILL BE APPLIED TO ALL CHILD COMPONENTS -->
 <style>
 	main {
 		margin: auto;
